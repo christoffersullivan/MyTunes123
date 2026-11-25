@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="248.0" prefWidth="600.0" style="-fx-background-color: #3A3A3A;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.mytunes.GUI.Controller.EditPlaylistController">
+   <children>
+      <Label layoutX="249.0" layoutY="44.0" prefHeight="38.0" prefWidth="101.0" style="-fx-background-color: #DC143C;" text=" Edit Playlist">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="24.0" layoutY="120.0" prefHeight="27.0" prefWidth="116.0" style="-fx-background-color: #DC143C;" text=" Playlist name">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtPlaylistName" layoutX="150.0" layoutY="120.0" prefHeight="26.0" prefWidth="370.0" promptText="Edit name of playlist" />
+      <Button fx:id="btnConfirm" onAction="#handleConfirm" layoutX="199.0" layoutY="181.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: #DC143C;" text="Confirm" />
+      <Button fx:id="btnCancel" onAction="#handleCancel" layoutX="338.0" layoutY="181.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="Cancel" />
+   </children>
+</AnchorPane>

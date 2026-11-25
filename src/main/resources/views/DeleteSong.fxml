@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #3A3A3A;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.mytunes.GUI.Controller.DeleteSongController">
+   <children>
+      <Label layoutX="241.0" layoutY="39.0" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #DC143C;" text=" Delete a song">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtSearchSong" layoutX="14.0" layoutY="90.0" prefHeight="26.0" prefWidth="567.0" promptText="Search for the song you want to delete" />
+      <ListView fx:id="lstSongs" layoutX="14.0" layoutY="139.0" prefHeight="202.0" prefWidth="567.0" />
+      <Button fx:id="btnConfirm" onAction="#handleConfirm" layoutX="195.0" layoutY="359.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" style="-fx-background-color: #DC143C;" text="Confirm" />
+      <Button fx:id="btnCancel" onAction="#handleCancel" layoutX="313.0" layoutY="359.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" text="Cancel" />
+   </children>
+</AnchorPane>
