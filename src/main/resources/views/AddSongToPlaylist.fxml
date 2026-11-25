@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="483.0" prefWidth="482.0" style="-fx-background-color: #3A3A3A;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.mrs.GUI.Controller.SongToPlaylistController">
+   <children>
+      <TextField fx:id="SearchForSong" layoutX="51.0" layoutY="78.0" prefHeight="26.0" prefWidth="378.0" promptText="Search for a Song" />
+      <Label layoutX="142.0" layoutY="24.0" prefHeight="32.0" prefWidth="197.0" style="-fx-background-color: #DC143C;" text=" Add a song to a playlist" textAlignment="JUSTIFY">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tblView" layoutX="51.0" layoutY="146.0" prefHeight="285.0" prefWidth="378.0">
+        <columns>
+          <TableColumn fx:id="colSongTitle" prefWidth="208.8000373840332" text="Song title" />
+          <TableColumn fx:id="colArtist" prefWidth="111.199951171875" text="Artist name" />
+            <TableColumn fx:id="colTime" prefWidth="58.39990234375" text="Time" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnSave" layoutX="307.0" layoutY="441.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #DC143C;" text="Save" />
+      <Button fx:id="btnCancel" layoutX="377.0" layoutY="442.0" mnemonicParsing="false" text="Cancel" />
+   </children>
+</AnchorPane>
