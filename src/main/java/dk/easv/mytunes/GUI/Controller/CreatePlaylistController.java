@@ -8,9 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-/**
- * Controller for the "Create a playlist" dialog (CreatePlaylist.fxml).
- */
+
 public class CreatePlaylistController {
 
     @FXML private TextField txtPlaylistName;
@@ -40,10 +38,12 @@ public class CreatePlaylistController {
 
     @FXML
     private void handleCancel(ActionEvent event) {
+
         closeStage();
     }
 
     private void closeStage() {
+
         ((Stage) btnCancel.getScene().getWindow()).close();
     }
 }

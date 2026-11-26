@@ -5,9 +5,7 @@ import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
-/**
- * Small helpers for the dialogs the controllers show.
- */
+
 public class AlertUtil {
 
     public static void showError(Throwable t) {
@@ -35,9 +33,7 @@ public class AlertUtil {
         alert.showAndWait();
     }
 
-    /**
-     * @return true if the user pressed OK
-     */
+
     public static boolean confirm(String header, String content) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Please confirm");

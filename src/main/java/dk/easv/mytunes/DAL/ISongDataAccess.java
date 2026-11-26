@@ -6,9 +6,7 @@ import dk.easv.mytunes.BE.Song;
 // Java imports
 import java.util.List;
 
-/**
- * Basic CRUD operations on Song
- */
+
 public interface ISongDataAccess {
 
     List<Song> getAllSongs() throws Exception;

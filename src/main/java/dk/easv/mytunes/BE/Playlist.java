@@ -1,13 +1,13 @@
 package dk.easv.mytunes.BE;
 
-/**
- * Business entity representing a playlist. The songs in a playlist are stored separately (PlaylistSong table).
- */
+
 public class Playlist {
 
     private int id;
     private String name;
-
+/*
+ setters and getters for id and name.
+ */
     public Playlist(int id, String name) {
         this.id = id;
         this.name = name;

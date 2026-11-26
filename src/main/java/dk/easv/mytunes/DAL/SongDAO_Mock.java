@@ -5,9 +5,7 @@ import dk.easv.mytunes.BE.Song;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * In-memory implementation, useful for testing the GUI without a database.
- */
+
 public class SongDAO_Mock implements ISongDataAccess {
 
     private List<Song> allSongs;

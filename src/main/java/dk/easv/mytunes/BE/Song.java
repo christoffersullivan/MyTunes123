@@ -1,24 +1,18 @@
 package dk.easv.mytunes.BE;
 
-/**
- * Business entity representing a song in MyTunes.
- */
+
 public class Song {
 
     private int id;
     private String title;
     private String artist;
     private String genre;
-    private double time; // duration in seconds
-    private String filePath; // relative path to the audio file, e.g. music/song.mp3
+    private double time;
+    private String filePath;
 
-    /**
-     * @param id     database id (use -1 for a song that has not been saved yet)
-     * @param title  song title
-     * @param artist song artist
-     * @param genre  song genre / category (free text)
-     * @param time   duration of the song in seconds
-     * @param filePath path to the audio file (mp3 or wav)
+
+    /*
+    setters for song information.
      */
     public Song(int id, String title, String artist, String genre, double time, String filePath) {
         this.id = id;
@@ -29,6 +23,9 @@ public class Song {
         this.filePath = filePath;
     }
 
+    /*
+    getter to get information of songs.
+     */
     public int getId() {
         return id;
     }
@@ -57,9 +54,9 @@ public class Song {
         this.genre = genre;
     }
 
-    /**
-     * @return duration of the song in seconds
-     */
+   /*
+   song timer.
+    */
     public double getTime() {
         return time;
     }

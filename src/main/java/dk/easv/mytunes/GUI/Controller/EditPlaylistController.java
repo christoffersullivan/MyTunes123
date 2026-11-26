@@ -20,9 +20,7 @@ public class EditPlaylistController {
     private PlaylistModel playlistModel;
     private Playlist playlist;
 
-    /**
-     * Must be called after the FXML is loaded.
-     */
+
     public void setData(PlaylistModel playlistModel, Playlist playlist) {
         this.playlistModel = playlistModel;
         this.playlist = playlist;

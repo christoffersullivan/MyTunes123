@@ -10,10 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * JDBC implementation of the song data access (SQL Server).
- * All statements are prepared statements to avoid SQL injection.
- */
+
 public class SongDAO_DB implements ISongDataAccess {
 
     private DBConnector dbConnector = new DBConnector();
@@ -61,7 +58,9 @@ public class SongDAO_DB implements ISongDataAccess {
 
             stmt.executeUpdate();
 
-            // Get the generated id from the DB - the GUI needs it
+            /*
+            Get the generated id from the DB - the GUI needs it
+             */
             int id = 0;
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
@@ -100,9 +99,7 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
-    /**
-     * Deletes the song and removes it from all playlists, in one transaction.
-     */
+
     @Override
     public void deleteSong(Song song) throws Exception {
         try (Connection conn = dbConnector.getConnection()) {

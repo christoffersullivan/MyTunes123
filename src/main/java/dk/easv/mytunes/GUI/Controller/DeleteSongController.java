@@ -12,10 +12,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-/**
- * Controller for the "Delete a song" dialog (DeleteSong.fxml).
- * Deleting a song also removes it from all playlists (done in the DAL).
- */
+
+
 public class DeleteSongController {
 
     @FXML private TextField txtSearchSong;
@@ -31,16 +29,14 @@ public class DeleteSongController {
                 (observable, oldValue, newValue) -> btnConfirm.setDisable(newValue == null));
     }
 
-    /**
-     * Must be called after the FXML is loaded.
-     */
+
     public void setSongModel(SongModel songModel) {
         this.songModel = songModel;
 
         FilteredList<Song> filtered = new FilteredList<>(songModel.getAllSongs());
         lstSongs.setItems(filtered);
 
-        // Search while typing (title or artist)
+        // Search while typing
         txtSearchSong.textProperty().addListener((observable, oldValue, newValue) ->
                 filtered.setPredicate(song -> SongManager.matchesFilter(song, newValue)));
     }

@@ -21,7 +21,7 @@ import java.io.File;
 
 /**
  * Controller for the New/Edit Song dialog (CreateNewSong.fxml).
- * Used for creating a song, or for editing one when setSongToEdit is called.
+ * Used for creating a song, or for editing one when setSongToEdit is called.!!!!!
  */
 public class CreateNewSongController {
 
@@ -32,24 +32,22 @@ public class CreateNewSongController {
     @FXML private Button btnChooseFile, btnSave, btnCancel;
 
     private SongModel songModel;
-    private Song songToEdit;       // null when creating a new song
-    private File chosenFile;       // file picked by the user (null = keep the song's current file)
-    private MediaPlayer durationProbe; // kept in a field so it is not garbage collected while loading
+    private Song songToEdit;
+    private File chosenFile;
+    private MediaPlayer durationProbe;
 
     @FXML
     public void initialize() {
         cmbCategory.getItems().setAll(SongManager.getCategories());
     }
 
-    /**
-     * Must be called after the FXML is loaded.
-     */
+
     public void setSongModel(SongModel songModel) {
         this.songModel = songModel;
     }
 
-    /**
-     * Switches the dialog to edit mode and fills in the song's current values.
+    /*
+    song editor, title, artist, time, catagory and filepath.
      */
     public void setSongToEdit(Song song) {
         this.songToEdit = song;
@@ -69,6 +67,9 @@ public class CreateNewSongController {
         }
     }
 
+    /*
+    filepath and file information when choosing file when creating new song.
+     */
     @FXML
     private void handleChooseFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -83,12 +84,12 @@ public class CreateNewSongController {
 
         chosenFile = file;
         lstSongFile.getItems().setAll(file.getAbsolutePath());
-        detectDuration(file);
+        detectDuration(file);//!!!!!!!
     }
 
     /**
      * Reads the song length from the file and fills in the time field.
-     * If it fails, the user can type the time manually.
+     * If it fails, the user can type the time manually.!!!!!
      */
     private void detectDuration(File file) {
         try {
@@ -105,6 +106,9 @@ public class CreateNewSongController {
         }
     }
 
+    /*
+    saves and update the new song and adds to database, show warnings when a field is empty.
+     */
     @FXML
     private void handleSave(ActionEvent event) {
         String title = txtSongTitle.getText().trim();
@@ -133,11 +137,28 @@ public class CreateNewSongController {
             return;
         }
 
+        /*
+        null ? is a short if/else because null is a condition
+         */
         try {
             String filePath = songToEdit != null ? songToEdit.getFilePath() : null;
             if (chosenFile != null) {
                 filePath = songModel.importSongFile(chosenFile);
             }
+            /* test this
+            try {
+                String filePath;
+                if (songToEdit != null) {
+                    filePath = songToEdit.getFilePath();
+                } else {
+                    filePath = null;
+                }
+
+                if (chosenFile != null) {
+                    filePath = songModel.importSongFile(chosenFile);
+                }
+                !!!!!
+             */
 
             if (songToEdit == null) {
                 songModel.createSong(new Song(-1, title, artist, category, time, filePath));

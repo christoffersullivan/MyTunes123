@@ -17,10 +17,7 @@ public class TimeUtil {
         return String.format("%d:%02d", rounded / 60, rounded % 60);
     }
 
-    /**
-     * Accepts "215", "215.5" or "3:35" and returns seconds.
-     * @throws NumberFormatException if the text is not a positive time
-     */
+
     public static double parse(String text) {
         String t = text.trim();
         double seconds;
@@ -35,9 +32,7 @@ public class TimeUtil {
         return seconds;
     }
 
-    /**
-     * Cell factory that shows a Double column (seconds) as m:ss. Sorting stays numeric.
-     */
+
     public static <S> Callback<TableColumn<S, Double>, TableCell<S, Double>> timeCellFactory() {
         return column -> new TableCell<S, Double>() {
             @Override

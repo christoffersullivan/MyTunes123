@@ -21,7 +21,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import javafx.collections.ListChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,7 +74,10 @@ public class MusicViewController {
         setupPlayerControls();
         updateButtonStates();
 
-        // Load data. If the database is unreachable the window still opens, with an error message.
+        /*
+        Loads from database. If the database is unreachable the window still opens, with an error message.
+         */
+
         try {
             songModel = new SongModel();
             playlistModel = new PlaylistModel();
@@ -87,7 +90,9 @@ public class MusicViewController {
             return;
         }
 
-        // model lists -> sorted lists (click column headers to sort) -> table
+        /*
+        sort all columns when clicked.
+         */
         sortedAllSongs = new SortedList<>(songModel.getObservableSongs());
         sortedAllSongs.comparatorProperty().bind(tblSongs.comparatorProperty());
         sortedPlaylistSongs = new SortedList<>(playlistModel.getObservableSongs());
@@ -95,7 +100,6 @@ public class MusicViewController {
         tblSongs.setItems(sortedAllSongs);
 
         tblPlaylists.setItems(playlistModel.getPlaylists());
-        // The # column shows row numbers, which change when playlists are added or removed
         playlistModel.getPlaylists().addListener(
                 (javafx.collections.ListChangeListener<Playlist>) change -> Platform.runLater(tblPlaylists::refresh));
 
@@ -111,10 +115,37 @@ public class MusicViewController {
             updateButtonStates();
         });
 
+        /*
+        tblPlaylists.setItems(playlistModel.getPlaylists());
+        playlistModel.getPlaylists().addListener((ListChangeListener<Playlist>) change -> {
+            tblPlaylists.refresh();
+        });
+
+        tblPlaylists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                playlistModel.loadSongs(newValue);
+            } catch (Exception e) {
+                AlertUtil.showError(e);
+            }
+
+            if (newValue == null) {
+                tblSongs.setItems(sortedAllSongs);
+                lblSelectedPlaylist.setText("No playlist selected (showing all songs)");
+            } else {
+                tblSongs.setItems(sortedPlaylistSongs);
+                lblSelectedPlaylist.setText(newValue.getName());
+            }
+
+            updateButtonStates();
+});
+         */
+
         tblSongs.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> updateButtonStates());
 
-        // Double-click a song to play it
+       /*
+       you click two times to play the song
+        */
         tblSongs.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Song selected = tblSongs.getSelectionModel().getSelectedItem();
@@ -142,7 +173,9 @@ public class MusicViewController {
         });
         colPlaylistNumber.setSortable(false);
     }
-
+/*
+volume slider settings.
+ */
     private void setupPlayerControls() {
         sldVolume.setMin(0);
         sldVolume.setMax(1);
@@ -153,7 +186,9 @@ public class MusicViewController {
             }
         });
 
-        // Seek when the user clicks or drags the time slider
+        /*
+        time slider settings.
+         */
         sldTime.setOnMouseReleased(event -> {
             if (mediaPlayer != null) {
                 mediaPlayer.seek(Duration.seconds(sldTime.getValue()));
@@ -161,8 +196,8 @@ public class MusicViewController {
         });
     }
 
-    /**
-     * Enables/disables buttons depending on what is selected.
+    /*
+    button functions, disable button if they have no use.
      */
     private void updateButtonStates() {
         boolean playlistSelected = tblPlaylists.getSelectionModel().getSelectedItem() != null;
@@ -175,10 +210,10 @@ public class MusicViewController {
         btnEditSong.setDisable(!songSelected);
     }
 
-    // =====================================================================
-    // Songs
-    // =====================================================================
 
+/*
+opening of new windows.
+ */
     @FXML
     private void handleNewSong(ActionEvent event) {
         try {
@@ -224,8 +259,8 @@ public class MusicViewController {
         }
     }
 
-    /**
-     * The playlist view holds its own copies of songs, so reload them after a song was edited or deleted.
+    /*
+    updating song under playlist when songs are edited.
      */
     private void refreshAfterSongChange() {
         try {
@@ -236,8 +271,8 @@ public class MusicViewController {
         tblSongs.refresh();
     }
 
-    /**
-     * Filter / Clear toggle: filters on title or artist, and the button then changes to "Clear".
+    /*
+    filtering and filter clearing.
      */
     @FXML
     private void handleFilter(ActionEvent event) {
@@ -258,9 +293,9 @@ public class MusicViewController {
         }
     }
 
-    // =====================================================================
-    // Playlists
-    // =====================================================================
+    /*
+    opens window for playlist create
+     */
 
     @FXML
     public void handleCreatePlaylist(ActionEvent event) {
@@ -324,13 +359,16 @@ public class MusicViewController {
         }
     }
 
+    /*
+    removing the song from the playlist not the database.
+     */
     @FXML
     public void handleRemoveSong(ActionEvent event) {
         Playlist playlist = tblPlaylists.getSelectionModel().getSelectedItem();
         Song song = tblSongs.getSelectionModel().getSelectedItem();
         if (playlist == null || song == null) return;
 
-        // Removes the song from the playlist only - the song itself is kept
+
         try {
             playlistModel.removeSongFromPlaylist(playlist, song);
         } catch (Exception e) {
@@ -338,13 +376,12 @@ public class MusicViewController {
         }
     }
 
-    // =====================================================================
-    // Player
-    // =====================================================================
 
+    /*
+    play or pause song.
+     */
     @FXML
     public void handlePlayPause(ActionEvent event) {
-        // Playing -> pause
         if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
             mediaPlayer.pause();
             btnPlayPause.setText(PLAY_TEXT);
@@ -353,7 +390,6 @@ public class MusicViewController {
 
         Song selected = tblSongs.getSelectionModel().getSelectedItem();
 
-        // Paused -> resume (unless the user selected a different song)
         if (mediaPlayer != null && currentSong != null
                 && (selected == null || selected.getId() == currentSong.getId())) {
             mediaPlayer.play();
@@ -361,7 +397,9 @@ public class MusicViewController {
             return;
         }
 
-        // Otherwise play the selected song, or the first one in the table
+/*
+if no song is selected and i press start, it will play the first song in the index.
+ */
         Song toPlay = selected;
         if (toPlay == null && !tblSongs.getItems().isEmpty()) {
             toPlay = tblSongs.getItems().get(0);
@@ -371,11 +409,17 @@ public class MusicViewController {
         }
     }
 
+    /*
+    on click plays next song.
+     */
     @FXML
     public void handleNext(ActionEvent event) {
         playNext();
     }
 
+    /*
+    on click plays previous song.
+     */
     @FXML
     public void handlePrevious(ActionEvent event) {
         int index = indexInQueue(currentSong);
@@ -386,9 +430,8 @@ public class MusicViewController {
         }
     }
 
-    /**
-     * Starts playing a song chosen by the user. The songs currently shown in the table
-     * (playlist order, or all songs) become the queue, so the next song plays automatically.
+    /*
+    makes the queue so when song ends the next song in array list gets ready.
      */
     private void startFromTable(Song song) {
         playQueue = new ArrayList<>(tblSongs.getItems());
@@ -435,7 +478,10 @@ public class MusicViewController {
                 }
                 lblCurrentTime.setText(TimeUtil.format(newValue.toSeconds()));
             });
-            // When the song ends, the next one in the queue starts automatically
+
+            /*
+            when song ends play next, reset all timers and slidetime.
+             */
             mediaPlayer.setOnEndOfMedia(this::playNext);
             mediaPlayer.setOnError(() -> {
                 System.out.println("MediaPlayer Error: " + mediaPlayer.getError());
@@ -458,13 +504,11 @@ public class MusicViewController {
             selectInTable(next);
             playSong(next);
         } else {
-            stopPlayback(); // end of the list
+            stopPlayback();
         }
     }
 
-    /**
-     * Stops and releases the current player and resets the player controls.
-     */
+
     private void stopPlayback() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();

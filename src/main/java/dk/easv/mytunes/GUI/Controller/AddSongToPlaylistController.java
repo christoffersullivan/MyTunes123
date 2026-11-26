@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 /**
  * Controller for the "Add a song to a playlist" dialog (AddSongToPlaylist.fxml).
- * The song is added to the end of the playlist.
+ * The song is added to the end of the playlist.!!!!!!
  */
 public class AddSongToPlaylistController {
 
@@ -41,17 +41,17 @@ public class AddSongToPlaylistController {
         colTime.setCellFactory(TimeUtil.timeCellFactory());
     }
 
-    /**
-     * Must be called after the FXML is loaded.
-     */
+
     public void setData(SongModel songModel, PlaylistModel playlistModel, Playlist playlist) {
         this.playlistModel = playlistModel;
         this.playlist = playlist;
 
-        // all songs -> search filter -> sorting by column headers -> table
+        /*
+        searchbar filters.
+         */
         FilteredList<Song> filtered = new FilteredList<>(songModel.getAllSongs());
         SortedList<Song> sorted = new SortedList<>(filtered);
-        sorted.comparatorProperty().bind(tblSongs.comparatorProperty());
+        sorted.comparatorProperty().bind(tblSongs.comparatorProperty()); //makes it possible to press top of coulmn and sort.
         tblSongs.setItems(sorted);
 
         txtSearchSong.textProperty().addListener((observable, oldValue, newValue) ->

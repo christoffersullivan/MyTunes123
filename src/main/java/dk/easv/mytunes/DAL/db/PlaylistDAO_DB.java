@@ -11,9 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * JDBC implementation of playlist data access (tables Playlist and PlaylistSong).
- */
+
 public class PlaylistDAO_DB implements IPlaylistDataAccess {
 
     private DBConnector dbConnector = new DBConnector();
